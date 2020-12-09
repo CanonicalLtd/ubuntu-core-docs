@@ -1,18 +1,10 @@
----
-title: account assertion
----
+The account assertion ties a name for an account in the snap universe to its identifier and provides the authority's confidence in the name's validity.
 
-# account assertion
-
-The account assertion ties a name for an account in the snap universe to its
-identifier and provides the authority's confidence in the name's validity.
-
-It is created on user creation by the store, and kept there while the account
-exists.
+It is created on user creation by the store, and kept there while the account exists.
 
 The format is as follows:
 
-```text
+``` text
 type:              account
 authority-id:      <authority account id>
 revision:          <int>
@@ -26,18 +18,13 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index for this assertion is the `account-id`. Validation `certified` means
-that the authority is confident in that the display name accurately describes the
-owner of the account, while `unproven` means that no checks have been performed
-on that. Header `username` is optional.
+The index for this assertion is the `account-id`. Validation `certified` means that the authority is confident in that the display name accurately describes the owner of the account, while `unproven` means that no checks have been performed on that. Header `username` is optional.
 
-Running `snap known account` gives us a list of the account assertions that
-are present in the system. When a snap is installed, the owner's account assertion
-is downloaded and added to this list.
+Running `snap known account` gives us a list of the account assertions that are present in the system. When a snap is installed, the owner's account assertion is downloaded and added to this list.
 
 An example for this assertion:
 
-```text
+``` text
 type: account
 authority-id: canonical
 revision: 14

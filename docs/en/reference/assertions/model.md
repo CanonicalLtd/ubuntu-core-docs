@@ -1,15 +1,8 @@
----
-title: model assertion
----
-
-# model assertion
-
-The model assertion is a statement by a brand about the properties of a device model.
-It should contain all information needed to create an Ubuntu Core image.
+The model assertion is a statement by a brand about the properties of a device model. It should contain all information needed to create an Ubuntu Core image.
 
 The format is as follows:
 
-```text
+``` text
 type:              model
 authority-id:      <authority account id>
 revision:          <int>
@@ -30,33 +23,19 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index for this assertion is the tuple <`series`, `brand-id`, `model`>. `series`
-allows the brand to define which release of the platform the device uses.
-“rolling” is the name of the development series that bridges stable series,
-which have names like “16” or “18”. `brand-id` is the account id of the brand, and `model`
-is a string that identifies a set of devices as desired by the brand.
+The index for this assertion is the tuple \<`series`, `brand-id`, `model`\>. `series` allows the brand to define which release of the platform the device uses. “rolling” is the name of the development series that bridges stable series, which have names like “16” or “18”. `brand-id` is the account id of the brand, and `model` is a string that identifies a set of devices as desired by the brand.
 
-The (optional) `classic` flag tells us if this is an all-snap system (false) or not (true).
-If not set, `architecture`, `gadget`, and `kernel` are mandatory. If set, `kernel`
-is forbidden and `architecture` and `gadget` are optional. If not present, an
-all-snap system is assumed.
+The (optional) `classic` flag tells us if this is an all-snap system (false) or not (true). If not set, `architecture`, `gadget`, and `kernel` are mandatory. If set, `kernel` is forbidden and `architecture` and `gadget` are optional. If not present, an all-snap system is assumed.
 
-The optional `store` header specifies a particular branded virtual store to be
-used for this model.
-The store in question has custom content specific to that model, curated by that brand,
-and managed by the store owner or the relevant brand. Each model knows which
-store it needs to speak to in order to get the appropriate content. If left out
-the device defaults to use the main Ubuntu store.
+The optional `store` header specifies a particular branded virtual store to be used for this model. The store in question has custom content specific to that model, curated by that brand, and managed by the store owner or the relevant brand. Each model knows which store it needs to speak to in order to get the appropriate content. If left out the device defaults to use the main Ubuntu store.
 
-`gadget` and `kernel` specify respectively the gadget and kernel snaps used to build
-the device images. `required-snaps` (optional) is a list of snaps that must be installed at
-all times, and cannot be removed from the device.
+`gadget` and `kernel` specify respectively the gadget and kernel snaps used to build the device images. `required-snaps` (optional) is a list of snaps that must be installed at all times, and cannot be removed from the device.
 
 This assertion is needed when [creating an Ubuntu Core device image](../../guides/build-device/image-building.md).
 
 For instance, this is an Ubuntu Core model assertion for amd64 architecture:
 
-```text
+``` text
 type: model
 authority-id: canonical
 series: 16

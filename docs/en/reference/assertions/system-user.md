@@ -1,17 +1,8 @@
----
-title: system-user assertion
----
-
-# system-user assertion
-
-The system-user assertion is a permit by the brand for local system users to be
-created on its specified devices. The most common use case is for
-creating system users in the factory line or on first boot, by using a USB
-dongle which would contain this assertion.
+The system-user assertion is a permit by the brand for local system users to be created on its specified devices. The most common use case is for creating system users in the factory line or on first boot, by using a USB dongle which would contain this assertion.
 
 The format is as follows:
 
-```text
+``` text
 type:           system-user
 authority-id:   <authority account-id>
 revision:       <int>
@@ -30,21 +21,15 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index is the tuple <`brand-id`, `email`>. `series` is as specified by the
-model assertion. These assertions must be signed by the brand.
+The index is the tuple \<`brand-id`, `email`\>. `series` is as specified by the model assertion. These assertions must be signed by the brand.
 
-The `password` header must be encoded and salted, following the format
-specified by [crypt](http://manpages.ubuntu.com/manpages/bionic/en/man1/crypt.1.html)(3).
-The `until` header is in this case required.
+The `password` header must be encoded and salted, following the format specified by [crypt](http://manpages.ubuntu.com/manpages/bionic/en/man1/crypt.1.html)(3). The `until` header is in this case required.
 
-The simple addition of such assertions to a device assertion database should not
-be enough to trigger the user creation. This must be initiated explicitly (via
-`snap create-user`, or in the context of the auto-import mechanism for
-assertions from removable devices, which requires physical access to the device).
+The simple addition of such assertions to a device assertion database should not be enough to trigger the user creation. This must be initiated explicitly (via `snap create-user`, or in the context of the auto-import mechanism for assertions from removable devices, which requires physical access to the device).
 
 This would be an example of this assertion:
 
-```text
+``` text
 type: system-user
 authority-id: 324hfanjkfqASdFQWfnawefhu8Jauhdj
 brand-id: 324hfanjkfqASdFQWfnawefhu8Jauhdj

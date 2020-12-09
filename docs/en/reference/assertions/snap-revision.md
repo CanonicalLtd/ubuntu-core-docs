@@ -1,17 +1,8 @@
----
-title: snap-revision assertion
----
-
-# snap-revision assertion
-
-The snap-revision assertion is a statement by the store acknowledging the
-receipt of a build of a snap and labeling it with a snap revision.
-It is one of the assertions that are downloaded along the snap when
-running `snap download <snap-name>`.
+The snap-revision assertion is a statement by the store acknowledging the receipt of a build of a snap and labeling it with a snap revision. It is one of the assertions that are downloaded along the snap when running `snap download <snap-name>`.
 
 The format is as follows:
 
-```text
+``` text
 type:              snap-revision
 authority-id:      <authority account id>
 snap-sha3-384:     <sha3-384 digest as url-safe unpadded base64>
@@ -25,12 +16,11 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index is the digest of the snap blob, `snap-sha3-384`. The store returns the
-`revision` assigned to the uploaded snap along other data.
+The index is the digest of the snap blob, `snap-sha3-384`. The store returns the `revision` assigned to the uploaded snap along other data.
 
 An example of this:
 
-```text
+``` text
 type: snap-revision
 authority-id: canonical
 snap-sha3-384: F5gwZqB3EBPQ62fhu2CL65TPNdyLbxCVdsxEReYrnp5sNu2z2BXAjdk_BRfUKJgV

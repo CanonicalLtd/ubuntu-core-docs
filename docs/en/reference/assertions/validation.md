@@ -1,16 +1,8 @@
----
-title: validation assertion
----
-
-# validation assertion
-
-The validation assertion tells us that a certain revision for a snap that is gated
-by another snap has been validated for a given series. It is closely related to the
-[snap-declaration](snap-declaration.md) assertion.
+The validation assertion tells us that a certain revision for a snap that is gated by another snap has been validated for a given series. It is closely related to the [snap-declaration](snap-declaration.md) assertion.
 
 The format is as follows:
 
-```text
+``` text
 type:                   validation
 authority-id:           <authority account-id>
 revision:               <int>
@@ -25,24 +17,15 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index is the tuple <`series`, `snap-id`, `approved-snap-id`, `approved-snap-revision`>.
-This assertion means that refreshing to revision number `revision` of snap
-`approved-snap-id` for `series` has been aproved by `authority-id`, being `snap-id`
-the snap that was gating the update, of which `authority-id` must be the owner.
-`approved-snap-id` must be part of the `refresh-control` list in the snap-declaration
-assertion of `snap-id` for this to be enforced.
+The index is the tuple \<`series`, `snap-id`, `approved-snap-id`, `approved-snap-revision`\>. This assertion means that refreshing to revision number `revision` of snap `approved-snap-id` for `series` has been aproved by `authority-id`, being `snap-id` the snap that was gating the update, of which `authority-id` must be the owner. `approved-snap-id` must be part of the `refresh-control` list in the snap-declaration assertion of `snap-id` for this to be enforced.
 
-In other words, the recomended revision for `approved-snap-id` in a system that
-has `snap-id` installed is the one in the `revision` header. There will be no
-automatic installation of newer revisions until a validation with a newer revision
-is released by the store. Note however that this does not forbid a forced update
-by the device owner.
+In other words, the recomended revision for `approved-snap-id` in a system that has `snap-id` installed is the one in the `revision` header. There will be no automatic installation of newer revisions until a validation with a newer revision is released by the store. Note however that this does not forbid a forced update by the device owner.
 
 The validation can be revoked by using the optional flag `revoked`.
 
 An example of this type:
 
-```text
+``` text
 type: validation
 authority-id: canonical
 revision: 1
@@ -64,4 +47,3 @@ sOuHdIXIMarsbbRIG1kC++Rl/XI9jWvoM++fT1kHCjXgKfi+CELo8YcOKHPbjWSd7DiAmSnR5I6f
 ovydzkMPTzzbsxyKePQHicKiqPs4dSfcEnPIGTpvgpGE4WEI3zYGYmsGgFOJqEnuy0IvVRCtJXU4
 yk/p3Jqwss3W0YbfypCWrvMBxho1mN5SRhaQv3r+kw==
 ```
-

@@ -1,14 +1,8 @@
----
-title: account-key assertion
----
-
-# account-key assertion
-
 The account-key assertion holds a public key belonging to an account.
 
 The format is as follows:
 
-```text
+``` text
 type:                account-key
 authority-id:        <authority account id>
 revision:            <int>
@@ -24,32 +18,19 @@ BODY: base64 encoded version prefixed public key packet
 <signature>                 # Encoded signature
 ```
 
-The index for this assertion is `public-key-sha3-384`. The key is valid in the
-time interval specified by `since` and `until`, being valid forever if `until`,
-which is optional, is not defined.
+The index for this assertion is `public-key-sha3-384`. The key is valid in the time interval specified by `since` and `until`, being valid forever if `until`, which is optional, is not defined.
 
-`public-key-sha3-384` is the SHA3-384 hash of the (decoded) body content. The
-body itself is a format version byte (0x1 for now) followed by the public key
-packet itself. The version 1 public key packet is a constrained/normalized
-RFC4880 public key packet (v4, new header format, algorithm fixed to RSA,
-timestamp fixed as well).
+`public-key-sha3-384` is the SHA3-384 hash of the (decoded) body content. The body itself is a format version byte (0x1 for now) followed by the public key packet itself. The version 1 public key packet is a constrained/normalized RFC4880 public key packet (v4, new header format, algorithm fixed to RSA, timestamp fixed as well).
 
-The digest of the public key (`public-key-sha3-384`) is used for the lookup of keys
-when verifying signatures: all assertions reference their signing key by
-providing this digest in a `sign-key-sha3-384` header.
+The digest of the public key (`public-key-sha3-384`) is used for the lookup of keys when verifying signatures: all assertions reference their signing key by providing this digest in a `sign-key-sha3-384` header.
 
-Note that when validating an `account-key` it is essential to check that the digest
-matches the assertion body, besides the signature validation performed for all
-assertions.
+Note that when validating an `account-key` it is essential to check that the digest matches the assertion body, besides the signature validation performed for all assertions.
 
-This kind of assertion is used to transmit key information beween the store
-and snapd so the later can validate assertions signed by the key owner. It
-is one of the assertions that you get when downloading a package with
-`sudo download <snap name>`.
+This kind of assertion is used to transmit key information beween the store and snapd so the later can validate assertions signed by the key owner. It is one of the assertions that you get when downloading a package with `sudo download <snap name>`.
 
 As an example, Canonical's public key for the store is
 
-```text
+``` text
 type: account-key
 authority-id: canonical
 revision: 2

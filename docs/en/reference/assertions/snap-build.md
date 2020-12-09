@@ -1,19 +1,10 @@
----
-title: snap-build assertion
----
+The snap-build assertion defines the basic properties of a snap at the time it was built by the developer. These are assertions are created and uploaded to the store with the command `snapcraft sign-build <snap>`.
 
-# snap-build assertion
-
-The snap-build assertion defines the basic properties of a snap at the time it
-was built by the developer. These are assertions are created and uploaded to
-the store with the command `snapcraft sign-build <snap>`.
-
-Currently, the only usage of this assertion is to provide traceability between
-publisher and snap. It is not checked by snapd or other parts of the system.
+Currently, the only usage of this assertion is to provide traceability between publisher and snap. It is not checked by snapd or other parts of the system.
 
 The format is as follows:
 
-```text
+``` text
 type:              snap-build
 authority-id:      <authority account id>
 revision:          <int>
@@ -27,13 +18,11 @@ sign-key-sha3-384: <key id> # Encoded key id of signing key
 <signature>                 # Encoded signature
 ```
 
-The index is the digest of the snap blob, `snap-sha3-384`. `grade` tells
-us whether the snap can be published to the candidate or stable channel
-(if stable) or not (if devel).
+The index is the digest of the snap blob, `snap-sha3-384`. `grade` tells us whether the snap can be published to the candidate or stable channel (if stable) or not (if devel).
 
 An example for this assertion:
 
-```text
+``` text
 type: snap-build
 authority-id: ouMZ22pMaY5EVwoLozfjM4fR31bko4yj
 snap-sha3-384: UFLajZv9twDGKvqorGn7ddN_hMPuq0DNlh24VGblYQZSM7EzcLRKGdxdigi6DUti

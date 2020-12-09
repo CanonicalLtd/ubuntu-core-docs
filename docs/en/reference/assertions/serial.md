@@ -1,20 +1,10 @@
----
-title: serial assertion
----
-
-# serial assertion
-
 The serial assertion is a statement binding a device identity with the device public key.
 
-Every Ubuntu Core device belongs to a particular model. It also has a unique
-device identity and the ability to prove that identity with cryptographic keys.
-The precise implementation of this cryptography may vary from device to device,
-based on the hardware and software capabilities of that device, and is part
-of the gadget snap.
+Every Ubuntu Core device belongs to a particular model. It also has a unique device identity and the ability to prove that identity with cryptographic keys. The precise implementation of this cryptography may vary from device to device, based on the hardware and software capabilities of that device, and is part of the gadget snap.
 
 The format is as follows:
 
-```text
+``` text
 type:               serial
 authority-id:       <authority account id>
 revision:           <int>
@@ -31,24 +21,17 @@ BODY: map of hardware constraints/details  # expected to be YAML
 <signature>                 # Encoded signature
 ```
 
-The index is the tuple <`brand-id`, `model`, `serial`>, being `serial` a unique
-identifier for the device. `brand-id` and `model` must match an existing model assertion.
+The index is the tuple \<`brand-id`, `model`, `serial`\>, being `serial` a unique identifier for the device. `brand-id` and `model` must match an existing model assertion.
 
-The crucial information provided by this assertion is the serial which is
-a unique identifier for this device in the context of the model. In other words,
-the brand should never assign the same serial to more than one device of the
-same model. This assertion must then be signed by the brand.
+The crucial information provided by this assertion is the serial which is a unique identifier for this device in the context of the model. In other words, the brand should never assign the same serial to more than one device of the same model. This assertion must then be signed by the brand.
 
-The assertion also provides a unique key for the device in the `device-key` header,
-being the format the same as for the key in the account-key assertion. A digest
-to identify it is also provided. The device key might change over time, in a
-controlled fashion, but at any given time there is only one device key per device.
+The assertion also provides a unique key for the device in the `device-key` header, being the format the same as for the key in the account-key assertion. A digest to identify it is also provided. The device key might change over time, in a controlled fashion, but at any given time there is only one device key per device.
 
 The (optional) body will contain device details in YAML format.
 
 This example was extracted from a kvm Ubuntu Core instance with `sudo snap known serial`:
 
-```text
+``` text
 type: serial
 authority-id: canonical
 brand-id: canonical

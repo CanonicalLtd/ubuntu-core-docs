@@ -1,30 +1,23 @@
----
-title: Board enablement overview
-table_of_contents: true
----
-
-# Board enablement overview
-
 This document will walk you through all the steps to enable an unsupported board and build an Ubuntu Core image for it.
 
 You will learn how to:
 
-* [Create a kernel snap](#the-kernel-snap)
-* [Create a gadget snap](#the-gadget-snap)
-* [Create a model assertion](#the-model-assertion)
-* [Build an image](#image-building)
+-   [Create a kernel snap](#heading--the-kernel-snap)
+-   [Create a gadget snap](#heading--the-gadget-snap)
+-   [Create a model assertion](#heading--the-model-assertion)
+-   [Build an image](#heading--image-building)
 
 Note: this documentation has been tested and performed on Roseapple Pi, you can find the complete example source in [this repository](https://github.com/kubiko/roseapple-pi-ubuntuCore-build).
 
-## The kernel snap
+<h2 id="heading--the-kernel-snap">The kernel snap</h2>
 
 Ubuntu Core kernels are based on the `multiv7_defconfig` plus some mandatory Ubuntu configs (see the `snapcraft.yaml` example below).
 
-You can find reference kernels here: [https://github.com/snapcore/sample-kernels](https://github.com/snapcore/sample-kernels)
+You can find reference kernels here: <https://github.com/snapcore/sample-kernels>
 
 Once you have a kernel ready for Ubuntu core, the recommended way to build a kernel is with [snapcraft](http://snapcraft.io). Preferably host the `snapcraft.yaml` for the kernel in your device build tree, independent of the kernel tree.
 
-#### Kernel `snapcraft.yaml` example
+<h4 id="heading--kernel-snapcraftyaml-example">Kernel `snapcraft.yaml` example</h4>
 
 [Source](https://github.com/kubiko/roseapple-pi-ubuntuCore-build/blob/master/builder/kernel/snapcraft.yaml)
 
@@ -67,16 +60,16 @@ Once you have a kernel ready for Ubuntu core, the recommended way to build a ker
                 - actduino_bubble_gum_sdboot_linux
             build-packages: [bc, kmod, cpio]
 
-## The gadget snap
+<h2 id="heading--the-gadget-snap">The gadget snap</h2>
 
 The [gadget snap](../../guides/build-device/gadget.html) is a key snap for device boot, as it contains the description of the boot and file system layout, which is then used for image building.
 
 You will need to create two files in the `meta` directory of this snap:
 
-* `meta/snap.yaml` containing the basic device description, together with device specific interfaces if needed
-* `meta/gadget.yaml` describing the device boot mode and its filesystem layout.
+-   `meta/snap.yaml` containing the basic device description, together with device specific interfaces if needed
+-   `meta/gadget.yaml` describing the device boot mode and its filesystem layout.
 
-#### `meta/snap.yaml` example
+<h4 id="heading--metasnapyaml-example">`meta/snap.yaml` example</h4>
 
     name: roseapple-pi
     version: 16.04-1
@@ -87,8 +80,7 @@ You will need to create two files in the `meta` directory of this snap:
     architectures:
         - armhf
 
-
-#### `meta/gadget.yaml` example
+<h4 id="heading--metagadgetyaml-example">`meta/gadget.yaml` example</h4>
 
     device-tree: actduino_bubble_gum_sdboot_linux.dtb
         volumes:
@@ -116,13 +108,13 @@ As of writing, snapcraft does not support native gadget building, you can snap i
 
     snapcraft snap <directory with gadget snap content>
 
-## The model assertion
+<h2 id="heading--the-model-assertion">The model assertion</h2>
 
 Before you can build an image to flash on the board, you need to prepare a [model assertion](../../reference/assertions.html) and sign it.
 
 First, prepare a JSON file describing the model assertion:
 
-#### Example model assertion for a Roseapple Pi
+<h4 id="heading--example-model-assertion-for-a-roseapple-pi">Example model assertion for a Roseapple Pi</h4>
 
     {
       "type": "model",
@@ -138,20 +130,20 @@ First, prepare a JSON file describing the model assertion:
 
 ##### Keys description
 
-*   `type`: the assertion type you are creating
-*   `authority-id`, `brand-id` refer to your store account id. You will find it on [your account page](https://dashboard.snapcraft.io/dev/account/), in the `Account-Id` field.
-*   `series`: the Ubuntu Core series in use
-*   `model`: a free form lower-case name for your target device
-*   `architecture`: the architecture of the device you are building the image for
-*   The `gadget` and `kernel` values refer to the name of your kernel and gadget snaps
-*   `timestamp` is a valid timestamp you need to generate using the `date -Iseconds --utc` command
+-   `type`: the assertion type you are creating
+-   `authority-id`, `brand-id` refer to your store account id. You will find it on [your account page](https://dashboard.snapcraft.io/dev/account/), in the `Account-Id` field.
+-   `series`: the Ubuntu Core series in use
+-   `model`: a free form lower-case name for your target device
+-   `architecture`: the architecture of the device you are building the image for
+-   The `gadget` and `kernel` values refer to the name of your kernel and gadget snaps
+-   `timestamp` is a valid timestamp you need to generate using the `date -Iseconds --utc` command
 
 Additional supported keywords for model assertion are:
 
-- `required-snaps`: list of strings describing the list of additional snaps to be preinstalled
-- `core`: define a custom core snap that needs to be used
+-   `required-snaps`: list of strings describing the list of additional snaps to be preinstalled
+-   `core`: define a custom core snap that needs to be used
 
-### Sign the model assertion
+<h3 id="heading--sign-the-model-assertion">Sign the model assertion</h3>
 
 Before signing the model, you need to have a valid key registered with your store account. Make sure the `snapcraft` and `snap` commands know about you by logging in using the email address attached to your account.
 
@@ -166,7 +158,7 @@ To check for keys on your machine, run
 
 For backup purposes, snap keys are stored under `~/.snap/gnupg`
 
-#### Key creation
+<h4 id="heading--key-creation">Key creation</h4>
 
 If you do not have a key, create a new one. You can pass an optional name for the key. If you don't, the key name will be `default`.
 
@@ -176,7 +168,7 @@ Then, register the key with your store account:
 
     snapcraft register-key my-key
 
-#### Signature step
+<h4 id="heading--signature-step">Signature step</h4>
 
 Now you have to sign the model assertion with your key, by piping your JSON model through the `snap sign -k <key name>` command and outputting a model file you will use to build your image.
 
@@ -184,7 +176,7 @@ Now you have to sign the model assertion with your key, by piping your JSON mode
 
 You can find a more detailed example of this process on the [custom image building](../../guides/build-device/image-building.html) page.
 
-#### Canonical signed assertions
+<h4 id="heading--canonical-signed-assertions">Canonical signed assertions</h4>
 
 Alternatively, if you just want to build an image using a kernel and gadget snaps signed by Canonical, you can use Canonical signed model assertions. Assertions for Canonical supported boards can be fetched from the Ubuntu store, for example:
 
@@ -202,7 +194,7 @@ Or
 
     snap known --remote model series=16 brand-id=canonical model=pi3
 
-## Image building
+<h2 id="heading--image-building">Image building</h2>
 
 Ubuntu Core images are built using the `ubuntu-image` command.
 
@@ -229,11 +221,11 @@ Note: The `--extra-snaps` argument takes either a snap name accessible from the 
 
 Your image is ready, you can use a tool like `dd` to write the image to an SD Card and boot your board.
 
-### Build a custom image for a reference board
+<h3 id="heading--build-a-custom-image-for-a-reference-board">Build a custom image for a reference board</h3>
 
 To build a custom image for one of the Canonical supported boards, use a Canonical signed model assertion, as described above and use a gadget and kernel snaps from the store.
 
-#### Example for a custom Raspberry Pi3 image
+<h4 id="heading--example-for-a-custom-raspberry-pi3-image">Example for a custom Raspberry Pi3 image</h4>
 
     curl -H "Accept: application/x.ubuntu.assertion" "https://assertions.ubuntu.com/v1/assertions/model/16/canonical/pi3" > pi3.model
 

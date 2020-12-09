@@ -1,62 +1,38 @@
----
-title: Configuration and Hooks
-table_of_contents: true
----
+<h2 id="heading--overview">Overview</h2>
 
-# Configuration and hooks
+There are a number of situations where snapd needs to notify a snap that something has happened. For example, when a snap is upgraded, it may need to run some sort of migration on the previous version's data in order to make it consumable by the new version. Or when an interface is connected or disconnected, the snap might need to obtain attributes specific to that connection. These types of situations are handled by hooks.
 
-## Overview
+<h2 id="heading--general-usage">General usage</h2>
 
-There are a number of situations where snapd needs to notify a snap that
-something has happened. For example, when a snap is upgraded, it may need to run
-some sort of migration on the previous version's data in order to make it
-consumable by the new version. Or when an interface is connected or
-disconnected, the snap might need to obtain attributes specific to that
-connection. These types of situations are handled by hooks.
+A hook is defined as an executable contained within the `meta/hooks/` directory inside the snap. The file name of the executable is the name of the hook (e.g. the `upgrade` hook executable would be `meta/hooks/upgrade`).
 
-## General usage
-
-A hook is defined as an executable contained within the `meta/hooks/` directory
-inside the snap. The file name of the executable is the name of the hook (e.g.
-the `upgrade` hook executable would be `meta/hooks/upgrade`).
-
-As long as the file name of the executable corresponds to a supported hook name,
-that's all one needs to do in order to utilize a hook within their snap. Note
-that hooks, like apps, are executed within a confined environment. By default
-hooks will run with no plugs; if a hook needs more privileges one can use the
-top-level attribute `hooks` in `snap.yaml` to request plugs, like so:
+As long as the file name of the executable corresponds to a supported hook name, that's all one needs to do in order to utilize a hook within their snap. Note that hooks, like apps, are executed within a confined environment. By default hooks will run with no plugs; if a hook needs more privileges one can use the top-level attribute `hooks` in `snap.yaml` to request plugs, like so:
 
     hooks: # Top-level YAML attribute, parallel to `apps`
         upgrade: # Hook name, corresponds to executable name
             plugs: [network] # Or any other plugs required by this hook
 
-Note that hooks will be called with no parameters. If they need more information
-from snapd (or need to provide information to snapd) they can utilize the
-`snapctl` command (for more information on `snapctl`, see `snapctl -h`).
+Note that hooks will be called with no parameters. If they need more information from snapd (or need to provide information to snapd) they can utilize the `snapctl` command (for more information on `snapctl`, see `snapctl -h`).
 
-
-## Supported Hooks
+<h2 id="heading--supported-hooks">Supported Hooks</h2>
 
 **Note:** The development of specific hooks is ongoing.
 
-
-### `configure`
+<h3 id="heading--configure">`configure`</h3>
 
 The `configure` hook is called upon initial install, upgrade, and whenever the user requests a configuration change via the `snap set` command. The hook should use `snapctl get` to retrieve the requested configuration from snapd, and act upon it. If it exits non-zero, the configuration will not be applied.
 
-
-#### `configure` example
+<h4 id="heading--configure-example">`configure` example</h4>
 
 Say the user runs:
 
-```bash
+``` bash
 snap set <snapname> username=foo password=bar
 ```
 
-The `configure` hook would be located within the snap at `meta/hooks/configure`.
-An example of what it might contain is:
+The `configure` hook would be located within the snap at `meta/hooks/configure`. An example of what it might contain is:
 
-```bash
+``` bash
 #!/bin/sh
 
 if ! username=$(snapctl get username); then
@@ -75,22 +51,15 @@ echo "password=$password" >> $SNAP_DATA/credentials
 chmod 600 $SNAP_DATA/credentials
 ```
 
-### `prepare-device` (gadget snap specific)
+<h3 id="heading--prepare-device-gadget-snap-specific">`prepare-device` (gadget snap specific)</h3>
 
-The optional `prepare-device` hook will be called on the gadget if
-present at the start of the device initialization process, once the
-device has first booted and the gadget snap has been installed. The
-hook will also be called if this process is retried later from scratch
-in case of initialization failures.
+The optional `prepare-device` hook will be called on the gadget if present at the start of the device initialization process, once the device has first booted and the gadget snap has been installed. The hook will also be called if this process is retried later from scratch in case of initialization failures.
 
-The device initialization process is for example responsible of
-setting the serial identification of the device through an exchange
-with a device service. The `prepare-device` hook can for example
-redirect this exchange and dynamically set options relevant to it.
+The device initialization process is for example responsible of setting the serial identification of the device through an exchange with a device service. The `prepare-device` hook can for example redirect this exchange and dynamically set options relevant to it.
 
-#### `prepare-device` example
+<h4 id="heading--prepare-device-example">`prepare-device` example</h4>
 
-```bash
+``` bash
 #!/bin/sh
 
 # optionally set the url of the service
@@ -107,5 +76,4 @@ snapctl set registration.proposed-serial="DEVICE-SERIAL"
 # the body is text, typically YAML;
 # this might need to be obtained dynamically
 snapctl set registration.body='mac: "00:00:00:00:ff:00"'
-
 ```

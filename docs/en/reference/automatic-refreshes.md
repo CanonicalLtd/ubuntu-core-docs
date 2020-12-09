@@ -1,16 +1,8 @@
-b
----
-title: Automatic refreshes
-table_of_contents: true
----
-
-# Automatic refreshes
-
 Installed snaps are automatically refreshed a few times a day, assuming a different revision is available on the channel being tracked.
 
 More details about when it is to be triggered may be obtained via:
 
-```bash
+``` bash
 $ snap refresh --time
 timer: 00:00~24:00/4
 last: today at 09:08 BST
@@ -19,7 +11,7 @@ next: today at 15:09 BST
 
 Check the state of recent updates with:
 
-```bash
+``` bash
 $ snap changes
 ID   Status  Spawn               Ready               Summary
 870  Done    today at 09:08 BST  today at 09:10 BST  Auto-refresh snap "core"
@@ -27,7 +19,7 @@ ID   Status  Spawn               Ready               Summary
 
 and to view the details for a specific update, pass its ID to the *change* command:
 
-```bash
+``` bash
 $ snap change 870
 Status  Spawn               Ready               Summary
 Done    today at 09:08 BST  today at 09:08 BST  Ensure prerequisites for "core" are available

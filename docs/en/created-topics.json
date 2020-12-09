@@ -1,0 +1,254 @@
+{
+    "brand-store.md": {
+        "id": 19723,
+        "links_updated": true,
+        "slug": "secure-brand-store-introduction",
+        "wiki": true
+    },
+    "build-store/index.md": {
+        "id": 19724,
+        "links_updated": true,
+        "slug": "store-overview",
+        "wiki": true
+    },
+    "build-store/issues.md": {
+        "id": 19725,
+        "links_updated": true,
+        "slug": "report-an-issue",
+        "wiki": true
+    },
+    "build-store/refresh-control.md": {
+        "id": 19726,
+        "links_updated": true,
+        "slug": "validations-and-refresh-control",
+        "wiki": true
+    },
+    "build-store/reviewer-tools.md": {
+        "id": 19727,
+        "links_updated": true,
+        "slug": "reviewer-tools",
+        "wiki": true
+    },
+    "build-store/settings.md": {
+        "id": 19728,
+        "links_updated": true,
+        "slug": "settings",
+        "wiki": true
+    },
+    "build-store/upload-snaps.md": {
+        "id": 19729,
+        "links_updated": true,
+        "slug": "upload-snaps",
+        "wiki": true
+    },
+    "coresnaps.md": {
+        "id": 19730,
+        "links_updated": true,
+        "slug": "ubuntu-iot-developer-documentation",
+        "wiki": true
+    },
+    "guides/build-device/board-enablement.md": {
+        "id": 19731,
+        "links_updated": true,
+        "slug": "board-enablement-overview",
+        "wiki": true
+    },
+    "guides/build-device/config-hooks.md": {
+        "id": 19732,
+        "links_updated": true,
+        "slug": "configuration-and-hooks",
+        "wiki": true
+    },
+    "guides/build-device/gadget.md": {
+        "id": 19733,
+        "links_updated": true,
+        "slug": "gadget-snaps",
+        "wiki": true
+    },
+    "guides/build-device/image-building.md": {
+        "id": 19734,
+        "links_updated": true,
+        "slug": "ubuntu-core-images",
+        "wiki": true
+    },
+    "guides/go-to-production/advanced.md": {
+        "id": 19735,
+        "links_updated": true,
+        "slug": "advanced-production-model-brand-store",
+        "wiki": true
+    },
+    "guides/go-to-production/simple.md": {
+        "id": 19736,
+        "links_updated": true,
+        "slug": "simple-production-model-ubuntu-store",
+        "wiki": true
+    },
+    "guides/intro/get-started.md": {
+        "id": 19737,
+        "links_updated": true,
+        "slug": "getting-started",
+        "wiki": true
+    },
+    "guides/intro/security.md": {
+        "id": 19738,
+        "links_updated": true,
+        "slug": "security-and-sandboxing",
+        "wiki": true
+    },
+    "guides/intro/store.md": {
+        "id": 19739,
+        "links_updated": true,
+        "slug": "stores-and-developer-accounts",
+        "wiki": true
+    },
+    "guides/manage-devices/index.md": {
+        "id": 19740,
+        "links_updated": true,
+        "slug": "system-user",
+        "wiki": true
+    },
+    "index.md": {
+        "id": 19741,
+        "links_updated": true,
+        "slug": "ubuntu-core-documentation",
+        "wiki": true
+    },
+    "metadata.yaml": {
+        "id": 19764,
+        "links_updated": true,
+        "slug": "documentation-index",
+        "wiki": false
+    },
+    "reference/assertions.md": {
+        "id": 19742,
+        "links_updated": true,
+        "slug": "assertions",
+        "wiki": true
+    },
+    "reference/assertions/account-key.md": {
+        "id": 19743,
+        "links_updated": true,
+        "slug": "account-key-assertion",
+        "wiki": true
+    },
+    "reference/assertions/account.md": {
+        "id": 19744,
+        "links_updated": true,
+        "slug": "account-assertion",
+        "wiki": true
+    },
+    "reference/assertions/model.md": {
+        "id": 19745,
+        "links_updated": true,
+        "slug": "model-assertion",
+        "wiki": true
+    },
+    "reference/assertions/serial.md": {
+        "id": 19746,
+        "links_updated": true,
+        "slug": "serial-assertion",
+        "wiki": true
+    },
+    "reference/assertions/snap-build.md": {
+        "id": 19747,
+        "links_updated": true,
+        "slug": "snap-build-assertion",
+        "wiki": true
+    },
+    "reference/assertions/snap-declaration.md": {
+        "id": 19748,
+        "links_updated": true,
+        "slug": "snap-declaration-assertion",
+        "wiki": true
+    },
+    "reference/assertions/snap-revision.md": {
+        "id": 19749,
+        "links_updated": true,
+        "slug": "snap-revision-assertion",
+        "wiki": true
+    },
+    "reference/assertions/system-user.md": {
+        "id": 19750,
+        "links_updated": true,
+        "slug": "system-user-assertion",
+        "wiki": true
+    },
+    "reference/assertions/validation.md": {
+        "id": 19751,
+        "links_updated": true,
+        "slug": "validation-assertion",
+        "wiki": true
+    },
+    "reference/core-configuration.md": {
+        "id": 19752,
+        "links_updated": true,
+        "slug": "ubuntu-core-configuration",
+        "wiki": true
+    },
+    "reference/gadget.md": {
+        "id": 19753,
+        "links_updated": true,
+        "slug": "gadget-snap-format",
+        "wiki": true
+    },
+    "reference/interfaces/index.md": {
+        "id": 19754,
+        "links_updated": true,
+        "slug": "core-interfaces-reference",
+        "wiki": true
+    },
+    "releases/uc20.md": {
+        "id": 19755,
+        "links_updated": true,
+        "slug": "ubuntu-core-20",
+        "wiki": true
+    },
+    "seeding-classic-image.md": {
+        "id": 19756,
+        "links_updated": true,
+        "slug": "seeding-a-classic-ubuntu-image",
+        "wiki": true
+    },
+    "serial-vault.md": {
+        "id": 19757,
+        "links_updated": true,
+        "slug": "serial-vault-user-guide",
+        "wiki": true
+    },
+    "stacks/audio/index.md": {
+        "id": 19758,
+        "links_updated": true,
+        "slug": "audio-management",
+        "wiki": true
+    },
+    "stacks/bluetooth/index.md": {
+        "id": 19759,
+        "links_updated": true,
+        "slug": "bluetooth-management",
+        "wiki": true
+    },
+    "stacks/disk/index.md": {
+        "id": 19760,
+        "links_updated": true,
+        "slug": "disk-management",
+        "wiki": true
+    },
+    "stacks/location/index.md": {
+        "id": 19761,
+        "links_updated": true,
+        "slug": "location-services",
+        "wiki": true
+    },
+    "stacks/network/index.md": {
+        "id": 19762,
+        "links_updated": true,
+        "slug": "network-management-services",
+        "wiki": true
+    },
+    "stacks/power/index.md": {
+        "id": 19763,
+        "links_updated": true,
+        "slug": "power-management",
+        "wiki": true
+    }
+}

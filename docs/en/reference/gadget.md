@@ -1,89 +1,67 @@
----
-title: Gadget snap format
-table_of_contents: true
----
+The gadget snap is responsible for defining and manipulating system properties specific to one or more devices.
 
-# Gadget snap
+It contains device-specific support code and data, and is produced and signed by the device [brand](https://snapcraft.io/docs/glossary#heading--brand-store) via a [model assertion](assertions/model.md).
 
-The gadget snap is responsible for defining and manipulating system properties
-specific to one or more devices. 
+The gadget snap may encode the mechanisms for device initialisation, key generation and identity certification, as well as particular processes for the lifecycle of the device, such as factory resets.
 
-It contains device-specific support code and data, and is produced and signed
-by the device [brand](https://snapcraft.io/docs/glossary#heading--brand-store)
-via a [model assertion](assertions/model.md).
+It is perfectly possible for different models to share a gadget snap.
 
-The gadget snap may encode the mechanisms for device initialisation, key
-generation and identity certification, as well as particular processes for the
-lifecycle of the device, such as factory resets.
-
- It is perfectly possible for different models to share a gadget snap.
-
-## Setup files
+<h2 id="heading--setup-files">Setup files</h2>
 
 In addition to traditional snap metadata, the gadget snap also holds some setup files fundamental to the initialization and lifecycle of the device:
 
-- `meta/snap.yaml` - Traditional snap details, with `type: gadget` explicitly defined.
-- `meta/gadget.yaml` - Gadget-specific information. See below.
-- `grub.conf` - Required grub configuration when using this bootloader.
-- `u-boot.conf` - Required u-boot configuration when using this bootloader.
-- `cloud.conf` - Optional [cloud-init](https://cloudinit.readthedocs.io/en/latest/) configuration; cloud-init is disabled if missing.
+-   `meta/snap.yaml` - Traditional snap details, with `type: gadget` explicitly defined.
+-   `meta/gadget.yaml` - Gadget-specific information. See below.
+-   `grub.conf` - Required grub configuration when using this bootloader.
+-   `u-boot.conf` - Required u-boot configuration when using this bootloader.
+-   `cloud.conf` - Optional [cloud-init](https://cloudinit.readthedocs.io/en/latest/) configuration; cloud-init is disabled if missing.
 
 Sample configuration files may be found in the reference gadget snaps:
 
-- [Raspberry Pi (2B, 3B, 3A+, 3B+, 4B, Compute Module 3, and Compute Module 3+)](https://github.com/snapcore/pi-gadget)
-- [Beagleblack](https://github.com/ogra1/beaglebone-gadget)
-- [Dragonboard](https://github.com/snapcore/dragonboard-gadget)
-- [amd64](https://github.com/snapcore/pc-amd64-gadget)
-- [i386](https://github.com/snapcore/pc-i386-gadget)
+-   [Raspberry Pi (2B, 3B, 3A+, 3B+, 4B, Compute Module 3, and Compute Module 3+)](https://github.com/snapcore/pi-gadget)
+-   [Beagleblack](https://github.com/ogra1/beaglebone-gadget)
+-   [Dragonboard](https://github.com/snapcore/dragonboard-gadget)
+-   [amd64](https://github.com/snapcore/pc-amd64-gadget)
+-   [i386](https://github.com/snapcore/pc-i386-gadget)
 
-## The gadget.yaml file
+<h2 id="heading--the-gadgetyaml-file">The gadget.yaml file</h2>
 
 Four YAML keys are used to describe your target device:
 
-* `defaults` (YAML sub-section, optional): default configuration options for
-  the defined snaps, applied on installation.
+-   `defaults` (YAML sub-section, optional): default configuration options for the defined snaps, applied on installation.
 
-```yaml
+```{=html}
+<!-- -->
+```
+``` yaml
 defaults:
     <snap id>:
         <key>: <value>
 ```
 
-* `device-tree` (filename, optional): the Device Tree Blob path. If device-tree
-  is specified, `dtbs/filename` must exist in kernel or gadget snap (depends on
-origin) and `snap_device_tree_origin` and `snap_device_tree` are made available
-for u-boot and grub.
-* `device-tree-origin` (string, optional): `kernel` or `gadget` (default)
-  depending if the DTB is located in the kernel or in the gadget snap.
-* `volumes` (YAML sub-section, required): the volumes layout, where each disk
-  image is represented as a YAML sub-section.
+-   `device-tree` (filename, optional): the Device Tree Blob path. If device-tree is specified, `dtbs/filename` must exist in kernel or gadget snap (depends on origin) and `snap_device_tree_origin` and `snap_device_tree` are made available for u-boot and grub.
+-   `device-tree-origin` (string, optional): `kernel` or `gadget` (default) depending if the DTB is located in the kernel or in the gadget snap.
+-   `volumes` (YAML sub-section, required): the volumes layout, where each disk image is represented as a YAML sub-section.
 
-### The `volumes` sub-section
+<h3 id="heading--the-volumes-sub-section">The `volumes` sub-section</h3>
 
 Each volume is described by:
 
-* a name (required)
-* a partition structure (required)
-* a bootloader definition (`grub`, `u-boot`)
-* a partitioning schema eg. `mbr`
+-   a name (required)
+-   a partition structure (required)
+-   a bootloader definition (`grub`, `u-boot`)
+-   a partitioning schema eg. `mbr`
 
-Volumes define the structure and content of the images to be written into one
-or more block devices of the gadget device. Each volume in the structure
-represents a different image for a "disk" in the device.
+Volumes define the structure and content of the images to be written into one or more block devices of the gadget device. Each volume in the structure represents a different image for a "disk" in the device.
 
-### Specification
+<h3 id="heading--specification">Specification</h3>
 
-The `meta/gadget.yaml` file contains the basic metadata for gadget-specific
-functionality, including a detailed specification of which structure items
-compose an image. The latter is used both by snapd and by ubuntu-image when
-creating images for these devices.
+The `meta/gadget.yaml` file contains the basic metadata for gadget-specific functionality, including a detailed specification of which structure items compose an image. The latter is used both by snapd and by ubuntu-image when creating images for these devices.
 
-A gadget snap's boot assets can also be automatically updated when the snap is
-refreshed. See [Updating gadget boot
-assets](https://snapcraft.io/docs/gadget-boot-assets) for further details.
+A gadget snap's boot assets can also be automatically updated when the snap is refreshed. See [Updating gadget boot assets](https://snapcraft.io/docs/gadget-boot-assets) for further details.
 
-The following specification defines what is supported in `gadget.yaml`:
-</br>
+The following specification defines what is supported in `gadget.yaml`: `</br>`{=html}
+```{=html}
 <details>
 <summary>**gadget.yaml specification**</summary>
 
@@ -220,9 +198,10 @@ volumes:
 ```
 
 </details>
+```
+`</br>`{=html}
 
-</br>
-
+```{=html}
 <details>
 <summary>**Example: Raspberry Pi 3 gadget.yaml**</summary>
 
@@ -256,28 +235,19 @@ Used with the following directory structure:
     └── README
 
 </details>
+```
+`<a name="prepare-device">`{=html}`</a>`{=html}
 
-<a name="prepare-device"></a>
+<h2 id="heading--prepare-device-hook">prepare-device hook</h2>
 
-## prepare-device hook
+The optional `prepare-device` hook will be called on the gadget at the start of the device initialisation process, after the gadget snap has been installed. The hook will also be called if this process is retried later from scratch in case of initialisation failures.
 
-The optional `prepare-device` hook will be called on the gadget at the start of
-the device initialisation process, after the gadget snap has been installed.
-The hook will also be called if this process is retried later from scratch in
-case of initialisation failures.
+The device initialisation process is, for example, responsible for setting the serial identification of the device through an exchange with a device service. The `prepare-device` hook can for example redirect this exchange and dynamically set options relevant to it.
 
-The device initialisation process is, for example, responsible for setting the
-serial identification of the device through an exchange with a device service.
-The `prepare-device` hook can for example redirect this exchange and
-dynamically set options relevant to it. 
+One must ensure that `registration.proposed-serial` is set to a value **unique** across all devices of the brand and model and that it does not contain a `/`. It is going to be used as the "serial number" (a string, not necessarily a number) part of the identification in case the device service supports setting it or **requires** it, as is the case with the *serial-vault*.
 
-One must ensure that `registration.proposed-serial`  is set to a value
-**unique**  across all devices of the brand and model and that it does not
-contain a `/`. It is going to be used as the "serial number" (a string, not
-necessarily a number) part of the identification in case the device service
-supports setting it or **requires** it, as is the case with the *serial-vault*.
-
-</br>
+`</br>`{=html}
+```{=html}
 <details>
 <summary>**Example: prepare-device hook**</summary>
 
@@ -301,4 +271,4 @@ snapctl set registration.body='mac: "00:00:00:00:ff:00"'
 
 ```
 </details>
-
+```

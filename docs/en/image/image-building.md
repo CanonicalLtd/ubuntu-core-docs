@@ -1,26 +1,12 @@
----
-title: Ubuntu IoT Developer Documentation
----
+Any device running Ubuntu Core is instantiated from an image. This image contains little more than the kernel, an *init* process, and a few essential tools. On all but the earliest releases of Ubuntu Core, even the *snapd* daemon that manages snaps is itself installed via its own snap.
 
-# Image building
+Reference images are available for supported platforms, including Raspberry Pi, Qualcomm Snapdragon and x86/KVM virtualisation, and these can be download and installed easily. See [Supported platforms](../platforms.md) for the current list and for download links to both the images and the model assertions they use.
 
-Any device running Ubuntu Core is instantiated from an image. This image
-contains little more than the kernel, an _init_ process, and a few essential
-tools. On all but the earliest releases of Ubuntu Core, even the _snapd_ daemon
-that manages snaps is itself installed via its own snap.
+<h2 id="heading--inside-a-model-assertion">Inside a model assertion</h2>
 
-Reference images are available for supported platforms, including Raspberry Pi,
-Qualcomm Snapdragon and x86/KVM virtualisation, and these can be download and
-installed easily. See [Supported platforms](../platforms.md) for the current list
-and for download links to both the images and the model assertions they use.
+Creating an Ubuntu Core image starts with a *model assertion*, a digitally signed text file with structured headers defining every aspect of the image. The input for defining and signing such a document is provided as JSON text:
 
-## Inside a model assertion
-
-Creating an Ubuntu Core image starts with a _model assertion_, a digitally
-signed text file with structured headers defining every aspect of the image.
-The input for defining and signing such a document is provided as JSON text:
-
-```json
+``` json
 {
   "type": "model",
   "series": "16",
@@ -34,38 +20,23 @@ The input for defining and signing such a document is provided as JSON text:
 }
 ```
 
-The above snippet shows the reference [model assertion for the Raspberry
-Pi](http://cdimage.ubuntu.com/ubuntu-core/18/stable/current/ubuntu-core-18-arm64+raspi.model-assertion).
-It includes details such as the store to use (`brand-id` and `authority-id`),
-the model name (`ubuntu-core-18-pi-arm64`) and the hardware architecture
-(`arm64`). Any snaps installed on the device will respect this selected
-architecture.
+The above snippet shows the reference [model assertion for the Raspberry Pi](http://cdimage.ubuntu.com/ubuntu-core/18/stable/current/ubuntu-core-18-arm64+raspi.model-assertion). It includes details such as the store to use (`brand-id` and `authority-id`), the model name (`ubuntu-core-18-pi-arm64`) and the hardware architecture (`arm64`). Any snaps installed on the device will respect this selected architecture.
 
-As outlined in [Snaps in Ubuntu Core](../coresnaps.md), there are three principle
-snaps-types that combine to create the Ubuntu Core environment. These are
-**kernel**, **gadget** and **core**, and all three need to be referenced within
-a custom model assertion.
+As outlined in [Snaps in Ubuntu Core](../coresnaps.md), there are three principle snaps-types that combine to create the Ubuntu Core environment. These are **kernel**, **gadget** and **core**, and all three need to be referenced within a custom model assertion.
 
-## Building with ubuntu-image
+<h2 id="heading--building-with-ubuntu-image">Building with ubuntu-image</h2>
 
-Images are built from a model assertion using
-[ubuntu-image](https://github.com/CanonicalLtd/ubuntu-image), a tool to
-generate a bootable image. It can be installed on a [snap-supporting Linux
-system](https://snapcraft.io/docs/installing-snapd) as follows:
+Images are built from a model assertion using [ubuntu-image](https://github.com/CanonicalLtd/ubuntu-image), a tool to generate a bootable image. It can be installed on a [snap-supporting Linux system](https://snapcraft.io/docs/installing-snapd) as follows:
 
-```bash
+``` bash
 $ sudo snap install ubuntu-image --beta --classic
 ```
 
-The _ubuntu-image_ command needs only the filename of the model assertion to build an
-image. 
+The *ubuntu-image* command needs only the filename of the model assertion to build an image.
 
-The following will build an _amd64_ image using the
-[ubuntu-core-18-amd64.model](https://raw.githubusercontent.com/snapcore/models/master/ubuntu-core-18-amd64.model)
-reference model assertion:
+The following will build an *amd64* image using the [ubuntu-core-18-amd64.model](https://raw.githubusercontent.com/snapcore/models/master/ubuntu-core-18-amd64.model) reference model assertion:
 
-
-```bash
+``` bash
 $ ubuntu-image snap ubuntu-core-18-amd64.model
 fetching snapd
 fetching pc-kernel
@@ -73,33 +44,27 @@ fetching core18
 fetching pc
 ```
 
-The output includes the _img_ file itself, alongside _seed.manifest_ and
-_snaps.manifest_ files. These manifest files simply list the specific revision
-numbers for the snapd, pc, pc-kernel and core snaps built within the image.
+The output includes the *img* file itself, alongside *seed.manifest* and *snaps.manifest* files. These manifest files simply list the specific revision numbers for the snapd, pc, pc-kernel and core snaps built within the image.
 
-You can now test the resulting image. Using [QEMU](https://www.qemu.org/), for
-instance, the following command will boot the image inside a VM and forward
-(SSH) port 22 to 8022 on your machine: 
+You can now test the resulting image. Using [QEMU](https://www.qemu.org/), for instance, the following command will boot the image inside a VM and forward (SSH) port 22 to 8022 on your machine:
 
-```bash
+``` bash
 $ qemu-system-x86_64 -enable-kvm -smp 2 -m 1500 \
 -netdev user,id=mynet0,hostfwd=tcp::8022-:22,hostfwd=tcp::8090-:80 \
 -device virtio-net-pci,netdev=mynet0 -drive file=pc.img,format=raw
 ```
 
-After running through the Ubuntu Core network setup and entering your account
-details, you will be able to SSH to your new Ubuntu Core deployment:
+After running through the Ubuntu Core network setup and entering your account details, you will be able to SSH to your new Ubuntu Core deployment:
 
-```bash
+``` bash
 $ ssh <username>@localhost -p 8022
 ```
 
-You are now connected to the Ubuntu Core virtual machine, from where you can
-configure and install whatever apps you need. 
+You are now connected to the Ubuntu Core virtual machine, from where you can configure and install whatever apps you need.
 
 To list which snaps are installed, for example, type 'snap list':
 
-```bash
+``` bash
 $ snap list
 Name       Version       Rev   Tracking  Publisher   Notes
 core18     20200124      1668  stable    canonical✓  base
@@ -108,10 +73,9 @@ pc-kernel  4.15.0-88.88  399   18        canonical✓  kernel
 snapd      2.43.3        6434  stable    canonical✓  snapd
 ```
 
-To view the model assertion used to build the image, type `snap model
---assertion`:
+To view the model assertion used to build the image, type `snap model --assertion`:
 
-```bash
+``` bash
 $ snap known model
 type: model
 authority-id: canonical
@@ -128,16 +92,13 @@ sign-key-sha3-384: 9tydnLa6MTJ-jaQTFUXEwHl1yRx7ZS4K5cyFDhYDcPzhS7uyEkDxdUjg9g08B
 [...]
 ```
 
-To output the serial assertion rather than the model assertion, type `snap
-model --serial`:
+To output the serial assertion rather than the model assertion, type `snap model --serial`:
 
-```bash
+``` bash
 $ snap model --serial
 brand-id:  canonical
 model:     ubuntu-core-18-amd64
 serial:    acb9cfdc-c4a1-4317-809e-e9c306cfc7e5
 ```
 
-See the [Snap documentation](https://snapcraft.io/docs) for more details on
-working with snaps. To build a custom image that includes your own selection of
-snaps, take a look at [Custom images](custom-images.md).
+See the [Snap documentation](https://snapcraft.io/docs) for more details on working with snaps. To build a custom image that includes your own selection of snaps, take a look at [Custom images](custom-images.md).
